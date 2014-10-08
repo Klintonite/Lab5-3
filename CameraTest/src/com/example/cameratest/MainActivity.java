@@ -1,4 +1,4 @@
-package com.example.cameratest;
+ package com.example.cameratest;
 // This project is adopted from https://eclass.srv.ualberta.ca/mod/resource/view.php?id=1136415
 import java.io.File;
 
@@ -50,14 +50,23 @@ public class MainActivity extends Activity {
 		File folder = new File(path);
 		if (!folder.exists())	
 			folder.mkdir();
-		//TODO: Add your code here...
-		//TODO: Add your code here...
-		//TODO: Add your code here...
-		//TODO: Add your code here...
-		//TODO: Add your code here...
-		//TODO: Add your code here...
-		//TODO: Add your code here...
-		//TODO: Add your code here...
+		//intents are means of communication between apps or activities. 
+		//explicit and implicit intents. explicit are used to call a specific component, implicite is when you hafve  a general idea. but nothing needs to be called. 
+		
+		String imagePathAndFileName = path + File.separator + 
+				String.valueOf(System.currentTimeMillis()) + ".jpg";
+		File imageFile = new File(imagePathAndFileName);
+		
+		imageFileUri = Uri.fromFile(imageFile);
+		
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);
+		//coordinates the sending intent and the returning one. 
+		startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+		
+		
+		
+		
     }
     
     //This method is run after returning back from camera activity:
@@ -66,12 +75,15 @@ public class MainActivity extends Activity {
 			TextView tv = (TextView)findViewById(R.id.status);
 			
 			if (resultCode == RESULT_OK){
-				//TODO: Add your code here...
-				//TODO: Add your code here...
-				//TODO: Add your code here...
-				//TODO: Add your code here...
-				//TODO: Add your code here...
-				//TODO: Add your code here...
+				
+				tv.setText("Photo Taken");
+				ImageButton ib = (ImageButton)findViewById(R.id.TakeAPhoto);
+				ib.setImageDrawable(Drawable.createFromPath(imageFileUri.getPath()));
+				
+				
+				
+				
+				
 			}
 			else
 				if (resultCode == RESULT_CANCELED){
